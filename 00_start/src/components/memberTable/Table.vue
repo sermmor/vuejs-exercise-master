@@ -1,6 +1,7 @@
 <template>
   <div>
     <h2>Member Page</h2>
+    <input :value="nameOrganization" @input="changeOrganization">
     <button @click="loadMembers">Load</button>
     <table :class="$style.table">
       <thead>
@@ -26,19 +27,23 @@ export default Vue.extend({
   name: "MemberTable",
   components: { MemberHead, MemberRow },
   data: () => ({
+    nameOrganization : "lemoncode",
     members: [] as Member[]
   }),
   methods: {
     loadMembers: function() {
-      getAllMembers("lemoncode").then(members => {
+      getAllMembers(this.nameOrganization).then(members => {
         this.members = members;
       });
+    },
+    changeOrganization: function(event) {
+      this.nameOrganization = event.target.value;
     }
   }
 });
 </script>
 
-+ <style module>
+<style module>
 .table {
   border-collapse: collapse;
   width: 100%;
